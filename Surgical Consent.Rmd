@@ -1,0 +1,64 @@
+---
+title: "Surgical consent"
+author: "James Booker"
+date: "2024-02-17"
+output: html_document
+---
+
+Load data Questionnaire 1 
+
+```{r}
+
+library(readxl)
+Data <- read_excel("Data.xlsx", sheet = "Questionnaire 1")
+View(Data)
+
+Surgical_consent <- Data
+Surgical_consent
+
+```
+
+Basic demographics of age and sex and operation type
+
+```{r}
+Sex <- Surgical_consent$Sex
+Age <- Surgical_consent$Age_years
+Operation_type <- Surgical_consent$`Operation type`
+
+xtabs(~ Sex)
+
+hist(Age)
+
+xtabs(~Operation_type)
+
+library(gtsummary)
+theme_gtsummary_compact()
+Surgical_consent %>% select("Sex", "Age_years", "Operation type", "Operation") %>% tbl_summary()
+
+```
+
+Analysis of different questions 
+
+```{r}
+#Q1 What was your experience of the current consent process?
+
+Surgical_consent
+colnames(Surgical_consent)
+
+theme_gtsummary_compact()
+Surgical_consent %>% select("Q1: What was your experience of the current consent process?", "Q1_code", "Q1_theme") %>% tbl_summary()
+
+theme_gtsummary_compact()
+Surgical_consent %>% select("Q2: Do you feel that your views were listened to and understood by the surgeon? Please explain", "Q2_code", "Q2_theme") %>% tbl_summary()
+
+theme_gtsummary_compact()
+Surgical_consent %>% select("Q3: Do you feel that the surgeon got to know you as an individual person \r\nprior to surgery during the process of consent and explanation? Please explain", "Q3_codes", "Q3_themes") %>% tbl_summary()
+
+theme_gtsummary_compact()
+Surgical_consent %>% select("Q4: Do you feel that you were made to understand the impact that any potential \r\ncomplciations may have had on you as an individual? Please explain", "Q4_codes", "Q4_themes") %>% tbl_summary()
+
+theme_gtsummary_compact()
+Surgical_consent %>% select("Q5: How could the current process be improved (contunue overleaf if necessary)?", "Q5_codes", "Q5_themes") %>% tbl_summary()
+
+```
+
